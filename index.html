@@ -414,7 +414,8 @@ window.CLIENT_DATA = {
     { wk: "June 1, 2026 - June 7, 2026",     leads: 91,  dials: 1407, pickups: 75,  convos: 13, booked: 5 },
     { wk: "June 8, 2026 - June 14, 2026",    leads: 112, dials: 1315, pickups: 70,  convos: 12, booked: 6 },
     { wk: "June 15, 2026 - June 21, 2026",   leads: 90,  dials: 822,  pickups: 37,  convos: 2,  booked: 0 },
-    { wk: "June 22, 2026 - June 28, 2026",   leads: 74,  dials: 592,  pickups: 35,  convos: 5,  booked: 3 }
+    { wk: "June 22, 2026 - June 28, 2026",   leads: 74,  dials: 592,  pickups: 35,  convos: 5,  booked: 3 },
+    { wk: "June 29, 2026 - July 5, 2026",     leads: 73,  dials: 2870, pickups: 277, convos: 29, booked: 10 }
   ]
 };
 </script>
@@ -567,33 +568,33 @@ window.CLIENT_DATA = {
 
   /* ===== conversion funnel ===== */
   function renderFunnel(){
-    var d=DATA[selected], closed=(selected in CLOSED)?CLOSED[selected]:null;
-    var stages=[
-      {name:'New Leads', sub:'top of funnel', val:d.leads, dpt:0},
-      {name:'Outbound Calls', sub:'dials placed', val:d.dials, dpt:1},
-      {name:'Pickups', sub:'calls answered', val:d.pickups, dpt:2},
-      {name:'Conversations', sub:'live discussions', val:d.convos, dpt:3},
-      {name:'Appointments', sub:'booked', val:d.booked, dpt:4},
-      {name:'Closed Deals', sub:closed==null?'not tracked yet':'won', val:closed, dpt:5, muted:closed==null}
+    var d=DATA[selected];
+    var base=[
+      {name:'New Leads', sub:'top of funnel', val:d.leads},
+      {name:'Outbound Calls', sub:'dials placed', val:d.dials},
+      {name:'Pickups', sub:'calls answered', val:d.pickups},
+      {name:'Conversations', sub:'live discussions', val:d.convos},
+      {name:'Appointments', sub:'booked this week', val:d.booked}
     ];
-    if((CFG.hide||[]).indexOf('newLeads')>-1) stages.shift(); // no lead tracking → start at Dials
+    if((CFG.hide||[]).indexOf('newLeads')>-1) base.shift(); // no lead tracking → funnel ends at Dials
+    var stages = base.reverse(); // Appointments on top, widest pool at the bottom
     var n=stages.length;
-    stages.forEach(function(s,i){ s.w = n>1 ? (100 - i*(50/(n-1))) : 100; });
+    stages.forEach(function(s,i){ s.w = n>1 ? (52 + i*(48/(n-1))) : 100; s.dpt = n-1-i; });
     var html='';
     stages.forEach(function(s,i){
       if(i>0){
-        var prev=stages[i-1], conn;
-        if(prev.name==='New Leads'){ // leads -> calls = expansion (multiplier)
-          conn = prev.val ? (s.val/prev.val).toFixed(1)+'× dials/lead' : '—';
+        var upper=stages[i-1], lower=s, conn;
+        if(lower.name==='New Leads'){ // leads -> calls = expansion (multiplier)
+          conn = lower.val ? (upper.val/lower.val).toFixed(1)+'× dials/lead' : '—';
           html+='<div class="vconn"><span class="arrow">▼</span><div class="chips"><span class="mult">'+conn+'</span></div></div>';
-        } else if(s.val==null || prev.val==null){
+        } else if(upper.val==null || lower.val==null){
           html+='<div class="vconn"><span class="arrow">▼</span><div class="chips"><span class="drop">awaiting data</span></div></div>';
         } else {
-          var adv = prev.val ? s.val/prev.val*100 : 0, drop=100-adv;
-          html+='<div class="vconn"><span class="arrow">▼</span><div class="chips"><span class="adv">'+fpct(adv)+' advance</span><span class="drop">'+fpct(drop)+' drop-off</span></div></div>';
+          var adv = lower.val ? upper.val/lower.val*100 : 0, drop=100-adv;
+          html+='<div class="vconn"><span class="arrow">▼</span><div class="chips"><span class="adv">'+fpct(adv)+' advanced</span><span class="drop">'+fpct(drop)+' drop-off</span></div></div>';
         }
       }
-      html+='<div class="vcard'+(s.muted?' muted':'')+'" style="--w:'+s.w+'%;--d:'+s.dpt+'">'+
+      html+='<div class="vcard" style="--w:'+s.w+'%;--d:'+s.dpt+'">'+
             '<div><div class="vname">'+s.name+'</div><div class="vsub">'+s.sub+'</div></div>'+
             '<div class="vcount">'+(s.val==null?'—':fmt(s.val))+'</div></div>';
     });
