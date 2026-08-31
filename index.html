@@ -405,10 +405,14 @@
 
 <script>
 /* =====================================================================
-   CAROLINA ELITE HOME SOLUTIONS — weekly data
-   Viktor overwrites this file every Monday ~8:00 AM EST.
-   To add a week: append one row to `weeks` (newest at the bottom).
-   Fields: wk, leads, dials, pickups, convos, booked (appts).
+   CAROLINA ELITE HOME SOLUTIONS (Dan Jones) — weekly data
+   RE-BASELINED Aug 2026 to the Retell call-data methodology.
+   Field mapping from the Retell report:
+     Dials                                 -> dials
+     Pickups (human or voicemail)          -> pickups
+     Conversations (live, non-voicemail)   -> convos
+     Appointments booked                   -> booked
+   New Leads is not tracked in this report. Earlier Viktor weeks removed.
    ===================================================================== */
 window.CLIENT_DATA = {
   client: "Carolina Elite Home Solutions",
@@ -417,24 +421,9 @@ window.CLIENT_DATA = {
   hide: ["leadSource"],
 
   weeks: [
-    { wk: "April 6, 2026 - April 12, 2026",  leads: 59,  dials: 128,  pickups: 22,  convos: 7,  booked: 2 },
-    { wk: "April 13, 2026 - April 19, 2026", leads: 62,  dials: 220,  pickups: 31,  convos: 7,  booked: 4 },
-    { wk: "April 20, 2026 - April 26, 2026", leads: 51,  dials: 234,  pickups: 28,  convos: 3,  booked: 1 },
-    { wk: "April 27, 2026 - May 3, 2026",    leads: 47,  dials: 1089, pickups: 80,  convos: 8,  booked: 2 },
-    { wk: "May 4, 2026 - May 10, 2026",      leads: 467, dials: 1134, pickups: 80,  convos: 8,  booked: 2 },
-    { wk: "May 11, 2026 - May 17, 2026",     leads: 86,  dials: 2882, pickups: 31,  convos: 31, booked: 8 },
-    { wk: "May 18, 2026 - May 24, 2026",     leads: 92,  dials: 2627, pickups: 135, convos: 17, booked: 5 },
-    { wk: "May 25, 2026 - May 31, 2026",     leads: 67,  dials: 1148, pickups: 56,  convos: 11, booked: 3 },
-    { wk: "June 1, 2026 - June 7, 2026",     leads: 91,  dials: 1407, pickups: 75,  convos: 13, booked: 5 },
-    { wk: "June 8, 2026 - June 14, 2026",    leads: 112, dials: 1315, pickups: 70,  convos: 12, booked: 6 },
-    { wk: "June 15, 2026 - June 21, 2026",   leads: 90,  dials: 822,  pickups: 37,  convos: 2,  booked: 0 },
-    { wk: "June 22, 2026 - June 28, 2026",   leads: 74,  dials: 592,  pickups: 35,  convos: 5,  booked: 3 },
-    { wk: "June 29, 2026 - July 5, 2026",     leads: 73,  dials: 2870, pickups: 277, convos: 29, booked: 10 },
-    { wk: "July 6, 2026 - July 12, 2026",      leads: 89, dials: 2451, pickups: 233, convos: 27, booked: 6 },
-    { wk: "July 13, 2026 - July 19, 2026",      leads: 50, dials: 2312, pickups: 237, convos: 10, booked: 5 },
-    { wk: "July 20, 2026 - July 26, 2026",      leads: 58, dials: 1330, pickups: 113, convos: 5,  booked: 0 },
-    { wk: "July 27, 2026 - August 2, 2026",     leads: 55, dials: 1345, pickups: 112, convos: 5,  booked: 4 },
-    { wk: "August 3, 2026 - August 9, 2026",     leads: 48, dials: 149,  pickups: 10,  convos: 1,  booked: 0 }
+    { wk: "August 10, 2026 - August 14, 2026", dials: 871, pickups: 442, convos: 117, booked: 0 },
+    { wk: "August 17, 2026 - August 20, 2026", dials: 998, pickups: 508, convos: 96,  booked: 0 },
+    { wk: "August 24, 2026 - August 28, 2026", dials: 788, pickups: 394, convos: 82,  booked: 0 }
   ]
 };
 </script>
